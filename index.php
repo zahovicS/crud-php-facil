@@ -2,8 +2,9 @@
 
 require_once "./includes/bootstrap.php";
 
-// $result = db()->queryExecute("SELECT * FROM usuarios")->queryGetAllResult();
-// debug($result);
+$messages = getFlashMessage();
+
+$usuarios = db()->queryExecute("SELECT * FROM usuarios")->queryGetAllResult();
 
 ?>
 
@@ -12,35 +13,68 @@ require_once "./includes/bootstrap.php";
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rgistro de usuarios</title>
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/normalize.css">
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/skeleton.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de usuarios</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/custom.css">
 </head>
 
 <body>
-    <section class="section">
-        <h2>Registro de usuario</h2>
-        <form action="<?= base_url()?>/api/Usuarios/Usuarios.php" method="POST">
-            <input type="hidden" name="action" value="guardar">
-            <div class="row">
-                <div class="four columns">
-                    <label for="nombreInput">Tu nombre</label>
-                    <input class="u-full-width" name="nombre" type="text" placeholder="Illojuan" id="nombreInput">
-                </div>
-                <div class="four columns">
-                    <label for="correoInput">Tu correo</label>
-                    <input class="u-full-width" name="email" type="email" placeholder="test@mailbox.com" id="correoInput">
-                </div>
-                <div class="four columns">
-                    <label for="contrasenaInput">Tu contraseña</label>
-                    <input class="u-full-width" name="contrasena" type="password" id="contrasenaInput">
-                </div>
+    <?php if ($messages) : ?>
+        <div class="alert alert-<?= $messages["type"] ?>">
+            Mensaje:<br />
+            <?= $messages["message"] ?>
+        </div>
+    <?php endif; ?>
+    <div id="layout">
+        <!-- Menu toggle -->
+        <a href="#menu" id="menuLink" class="menu-link">
+            <!-- Hamburger icon -->
+            <span></span>
+        </a>
+
+        <div id="menu">
+            <div class="pure-menu">
+                <a class="pure-menu-heading" href="#company">Admin</a>
+
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="#" class="pure-menu-link">Usuarios</a></li>
+                </ul>
             </div>
-            <button type="submit" class="button-primary">Enviar</button>
-        </form>
-    </section>
+        </div>
+
+        <div id="main">
+            <div class="header">
+                <h1>Lista de usuarios</h1>
+            </div>
+            <div class="content">
+                <table class="pure-table pure-table-horizontal">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>nombre</th>
+                            <th>correo</th>
+                            <th>acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($usuarios as $key => $usuario): ?>
+                            <tr>
+                                <td><?= $key + 1 ?></td>
+                                <td><?= $usuario->nombre ?></td>
+                                <td><?= $usuario->email ?></td>
+                                <td>
+                                    <a href="<?= base_url() ?>/api/Usuarios.php?action=guardar" class="pure-button button-secondary">Editar</a>
+                                    <?= $usuario->usuarios_id ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="<?= base_url() ?>/assets/js/main.js"></script>
 </body>
 
 </html>
