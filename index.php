@@ -20,12 +20,7 @@ $usuarios = db()->queryExecute("SELECT * FROM usuarios")->queryGetAllResult();
 </head>
 
 <body>
-    <?php if ($messages) : ?>
-        <div class="alert alert-<?= $messages["type"] ?>">
-            Mensaje:<br />
-            <?= $messages["message"] ?>
-        </div>
-    <?php endif; ?>
+    
     <div id="layout">
         <!-- Menu toggle -->
         <a href="#menu" id="menuLink" class="menu-link">
@@ -48,6 +43,12 @@ $usuarios = db()->queryExecute("SELECT * FROM usuarios")->queryGetAllResult();
                 <h1>Lista de usuarios</h1>
             </div>
             <div class="content">
+                <?php if ($messages) : ?>
+                    <div class="alert alert-<?= $messages["type"] ?>">
+                        Mensaje:<br />
+                        <?= $messages["message"] ?>
+                    </div>
+                <?php endif; ?>
                 <table class="pure-table pure-table-horizontal">
                     <thead>
                         <tr>
@@ -64,8 +65,8 @@ $usuarios = db()->queryExecute("SELECT * FROM usuarios")->queryGetAllResult();
                                 <td><?= $usuario->nombre ?></td>
                                 <td><?= $usuario->email ?></td>
                                 <td>
-                                    <a href="<?= base_url() ?>/api/Usuarios.php?action=guardar" class="pure-button button-secondary">Editar</a>
-                                    <?= $usuario->usuarios_id ?>
+                                    <a href="<?= base_url() ?>/api/Usuarios.php?action=editar&usuario_id=<?= $usuario->usuario_id ?>" class="pure-button button-secondary">Editar</a>
+                                    <?= $usuario->usuario_id ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

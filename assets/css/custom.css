@@ -275,3 +275,20 @@ Hides the menu at `48em`, but modify this based on your app's needs.
   background: rgb(66, 184, 221);
   /* this is a light blue */
 }
+
+
+.alert{
+  width: 100%;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.alert-success{
+  background-color: green;
+  color: white;
+}
+
+.alert-error{
+  background-color: crimson;
+  color: white;
+}

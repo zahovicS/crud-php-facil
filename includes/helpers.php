@@ -1,7 +1,8 @@
 <?php
 
 function base_url(){
-    $url = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $url = "http://localhost/phpfast/";
+    // $url = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 	return substr($url, 0, -1);
 }
 
@@ -14,8 +15,15 @@ function debug($data, $die = true)
 }
 
 function db(){
+    require_once "database.php";
     $database = new DataBase();
     return $database;
+}
+
+function validator(array $data,array $rules){
+    require_once "validator.php";
+    $database = new Validator();
+    return $database->validate($data,$rules);
 }
 
 function sanitizeInput($input) {
